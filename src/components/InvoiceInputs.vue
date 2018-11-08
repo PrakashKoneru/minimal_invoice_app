@@ -22,6 +22,7 @@
       <button v-if="!editMode" v-on:click="updateInvoiceList"> +ADD </button>
       <button v-if="editMode" v-on:click="editInvoice"> Edit </button>
       <button v-if="editMode" v-on:click="deleteInvoice"> Delete </button>
+      <button v-if="editMode" v-on:click="cancelModal"> Cancel </button>
     </div>
   </div>
 </template>
@@ -92,6 +93,9 @@ export default {
     },
     deleteInvoice() {
       this.$emit("deleteInvoice")
+    },
+    cancelModal() {
+      this.$modal.hide('InvoiceModal');
     }
   }
 }
