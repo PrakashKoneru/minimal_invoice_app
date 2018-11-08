@@ -1,30 +1,34 @@
 <template>
   <div>
-    <table>
-      <tr>
-        <th>Quantity</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Total</th>
-      </tr>
-      <tr v-for="(invoice, index) in invoiceList" v-on:click="showModalFor(index)" :key="invoice._id">
-        <td>{{ invoice.quantity }}</td>
-        <td>{{ invoice.description }}</td>
-        <td>{{ invoice.price }}</td>
-        <td>{{ invoice.total }}</td>
-      </tr>
-    </table>
-    <InvoiceInputs :invoiceList="invoiceList" @updateInvoiceList="updateInvoiceList"/>
-    <InvoiceModal name="InvoiceModal">
-      <InvoiceInputs
-        :editMode="true"
-        :invoiceList="invoiceList"
-        v-bind="selectedInvoice"
-        @deleteInvoice="deleteInvoice"
-        @editInvoice="editInvoice"
-        @updateInvoiceList="updateInvoiceList"
-      />
-    </InvoiceModal>
+    <div class="invoiceTable">
+      <table>
+        <tr>
+          <th>Quantity</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+        <tr v-for="(invoice, index) in invoiceList" v-on:click="showModalFor(index)" :key="invoice._id">
+          <td>{{ invoice.quantity }}</td>
+          <td>{{ invoice.description }}</td>
+          <td>{{ invoice.price }}</td>
+          <td>{{ invoice.total }}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="invoiceModal">
+      <InvoiceInputs :invoiceList="invoiceList" @updateInvoiceList="updateInvoiceList"/>
+      <InvoiceModal name="InvoiceModal">
+        <InvoiceInputs
+          :editMode="true"
+          :invoiceList="invoiceList"
+          v-bind="selectedInvoice"
+          @deleteInvoice="deleteInvoice"
+          @editInvoice="editInvoice"
+          @updateInvoiceList="updateInvoiceList"
+        />
+      </InvoiceModal>
+    </div>
   </div>
 </template>
 
@@ -44,7 +48,6 @@ export default {
   },
   methods: {
     updateInvoiceList(value) {
-      console.log(value)
       this.invoiceList = value
     },
     deleteInvoice() {
@@ -56,7 +59,7 @@ export default {
       this.$modal.show('InvoiceModal');
     },
     editInvoice(value) {
-      this.invoiceList = this.invoiceList.map((invoice, index) => {
+      this.invoiceList = this.invoiceList.map((invoice) => {
         if (invoice._id === this.selectedInvoice._id) {
           return value
         }
@@ -68,14 +71,25 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .invoiceTable {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+  }
   table {
+    width: 100%;
+    max-width: 600px;
     border-collapse: collapse;
   }
   td, th {
     border: 1px solid black;
     padding: 10px;
-    width: 100px;
+    width: 25%;
+    overflow: scroll;
+  }
+  .invoiceModal {
+    max-width: 100%;
   }
 </style>

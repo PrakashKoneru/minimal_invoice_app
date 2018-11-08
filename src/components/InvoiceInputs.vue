@@ -1,23 +1,28 @@
 <template>
   <div>
-    <div>
-      Quantity:
-      <input v-model.number="bindedQuantity" type="number" />
+    <div class="invoiceInputs">
+      <div class="invoiceField">
+        <div>Quantity:</div>
+        <input v-model.number="bindedQuantity" type="number" />
+      </div>
+      <div class="invoiceField">
+        <div>Description:</div>
+        <input v-model="bindedDescription" type="description" />
+      </div>
+      <div class="invoiceField">
+        <div>Price:</div>
+        <input v-model.number="bindedPrice" type="number" />
+      </div>
+      <div class="invoiceField">
+        <div>Total:</div>
+        <div>{{ bindedTotal }}</div>
+      </div>
     </div>
-    <div>
-      Description:
-      <input v-model="bindedDescription" type="description" />
+    <div class="invoiceButtons">
+      <button v-if="!editMode" v-on:click="updateInvoiceList"> +ADD </button>
+      <button v-if="editMode" v-on:click="editInvoice"> Edit </button>
+      <button v-if="editMode" v-on:click="deleteInvoice"> Delete </button>
     </div>
-    <div>
-      Price:
-      <input v-model.number="bindedPrice" type="number" />
-    </div>
-    <div>
-      Total: {{ bindedTotal }}
-    </div>
-    <button v-if="!editMode" v-on:click="updateInvoiceList"> +ADD </button>
-    <button v-if="editMode" v-on:click="editInvoice"> Edit </button>
-    <button v-if="editMode" v-on:click="deleteInvoice"> Delete </button>
   </div>
 </template>
 
@@ -28,7 +33,7 @@ export default {
   props: {
     invoiceList: {
       type: Array,
-      default: []
+      default: () => []
     },
     editMode: {
       type: Boolean,
@@ -92,20 +97,30 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
+  .invoiceInputs {
+    display: flex;
+    justify-content: space-around;
+    margin: auto;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    max-width: 80%;
+    text-align: left;
+  }
+
+  input {
+    height: 25px;
+    padding: 2px 5px;
+    outline: none;
+  }
+
+  input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .invoiceButtons {
+    margin-top: 20px;
+    text-align: center;
+  }
 </style>
