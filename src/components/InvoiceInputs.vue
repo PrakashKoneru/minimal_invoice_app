@@ -2,20 +2,20 @@
   <div>
     <div>
       Quantity:
-      <input v-model.number="bindedQuantity" type="number" />
+      <input v-model="quantity" type="number" />
     </div>
     <div>
       Description:
-      <input v-model="bindedDescription" type="description" />
+      <input v-model="description" type="description" />
     </div>
     <div>
       Price:
-      <input v-model.number="bindedPrice" type="number" />
+      <input v-model="price" type="number" />
     </div>
     <div>
-      Total: {{ bindedTotal }}
+      Total: {{ total }}
     </div>
-    <button v-if="!editMode" v-on:click="updateInvoiceList"> +ADD </button>
+    <button v-if="!selectedInvoice" v-on:click="updateInvoiceList"> +ADD </button>
   </div>
 </template>
 
@@ -23,51 +23,24 @@
 
 export default {
   name: 'InvoiceInputs',
-  props: {
-    invoiceList: {
-      type: Array,
-      default: []
-    },
-    editMode: {
-      type: Boolean,
-      default: false
-    },
-    quantity: {
-      type: Number,
-      default: 0
-    },
-    description: {
-      type: String,
-      default: ''
-    },
-    price: {
-      type: Number,
-      default: 0
-    },
-    total: {
-      type: Number,
-      default: 0
-    }
-  },
+  props: ["invoiceList", "selectedInvoice"],
   data() {
     return {
-      bindedQuantity: this.quantity,
-      bindedDescription: this.description,
-      bindedPrice: this.price,
-      bindedTotal: this.total
+      quantity: 0,
+      description: '',
+      price: 0,
+      total: 0
     }
   },
   methods: {
     updateInvoiceList() {
-      const { bindedQuantity: quantity, bindedDescription: description, bindedPrice: price } = this;
-      this.bindedTotal = quantity * price;
-      this.$emit("updateInvoiceList", {
-        quantity,
-        description,
-        price,
-        total: this.bindedTotal
-      });
+      const { quantity, description, price } = this;
+      this.total = quantity * price;
+      this.$emit("updateInvoiceList", { quantity, description, price, total: this.total })
     }
+  },
+  mounted() {
+    console.log(this.selectedInvoice)
   }
 }
 </script>
