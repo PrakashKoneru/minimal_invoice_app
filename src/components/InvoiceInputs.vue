@@ -2,20 +2,20 @@
   <div>
     <div>
       Quantity:
-      <input v-model="quantity" type="number" />
+      <input v-model="bindedQuantity" type="number" />
     </div>
     <div>
       Description:
-      <input v-model="description" type="description" />
+      <input v-model="bindedDescription" type="description" />
     </div>
     <div>
       Price:
-      <input v-model="price" type="number" />
+      <input v-model="bindedPrice" type="number" />
     </div>
     <div>
-      Total: {{ total }}
+      Total: {{ bindedTotal }}
     </div>
-    <button v-if="!selectedInvoice" v-on:click="updateInvoiceList"> +ADD </button>
+    <button v-if="!editMode" v-on:click="updateInvoiceList"> +ADD </button>
   </div>
 </template>
 
@@ -23,24 +23,50 @@
 
 export default {
   name: 'InvoiceInputs',
-  props: ["invoiceList", "selectedInvoice"],
+  props: {
+    invoiceList: {
+      type: Array,
+      default: []
+    },
+    editMode: {
+      type: Boolean,
+      default: false
+    },
+    quantity: {
+      type: Number,
+      default: 0
+    },
+    description: {
+      type: String,
+      default: ''
+    },
+    price: {
+      type: Number,
+      default: 0
+    },
+    total: {
+      type: Number,
+      default: 0
+    }
+  },
   data() {
     return {
-      quantity: 0,
-      description: '',
-      price: 0,
-      total: 0
+      bindedQuantity: this.quantity,
+      bindedDescription: this.description,
+      bindedPrice: this.price,
+      bindedTotal: this.total
     }
   },
   methods: {
     updateInvoiceList() {
-      const { quantity, description, price } = this;
-      this.total = quantity * price;
-      this.$emit("updateInvoiceList", { quantity, description, price, total: this.total })
+      const { bindedQuantity: quantity, bindedDescription: description, bindedPrice: price } = this;
+      this.bindedTotal = quantity * price;
+      this.$emit("updateInvoiceList", { quantity, description, price, total: this.bindedTotal })
     }
   },
   mounted() {
-    console.log(this.selectedInvoice)
+    const { quantity, description, price } = this;
+    console.log(quantity, description, price)
   }
 }
 </script>
