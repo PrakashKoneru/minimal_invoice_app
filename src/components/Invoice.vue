@@ -7,7 +7,7 @@
         <th>Price</th>
         <th>Total</th>
       </tr>
-      <tr v-for="(invoice, index) in invoiceList" v-on:click="editInvoice(index)" :key="index">
+      <tr v-for="(invoice, index) in invoiceList" v-on:click="showModalFor(index)" :key="invoice._id">
         <td>{{ invoice.quantity }}</td>
         <td>{{ invoice.description }}</td>
         <td>{{ invoice.price }}</td>
@@ -20,6 +20,8 @@
         :editMode="true"
         :invoiceList="invoiceList"
         v-bind="selectedInvoice"
+        @deleteInvoice="deleteInvoice"
+        @editInvoice="editInvoice"
         @updateInvoiceList="updateInvoiceList"
       />
     </InvoiceModal>
@@ -42,14 +44,25 @@ export default {
   },
   methods: {
     updateInvoiceList(value) {
-      this.invoiceList.push(value)
+      console.log(value)
+      this.invoiceList = value
     },
-    deleteInvoice(index) {
-      this.invoiceList = this.invoiceList.filter((invoice, i) => i !== index);
+    deleteInvoice() {
+      this.invoiceList = this.invoiceList.filter((invoice) => invoice._id !== this.selectedInvoice._id);
+      this.$modal.hide('InvoiceModal');
     },
-    editInvoice(index) {
+    showModalFor(index) {
       this.selectedInvoice = this.invoiceList[index];
       this.$modal.show('InvoiceModal');
+    },
+    editInvoice(value) {
+      this.invoiceList = this.invoiceList.map((invoice, index) => {
+        if (invoice._id === this.selectedInvoice._id) {
+          return value
+        }
+        return invoice
+      });
+      this.$modal.hide('InvoiceModal');
     }
   }
 }

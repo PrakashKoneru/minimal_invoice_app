@@ -16,6 +16,8 @@
       Total: {{ bindedTotal }}
     </div>
     <button v-if="!editMode" v-on:click="updateInvoiceList"> +ADD </button>
+    <button v-if="editMode" v-on:click="editInvoice"> Edit </button>
+    <button v-if="editMode" v-on:click="deleteInvoice"> Delete </button>
   </div>
 </template>
 
@@ -47,6 +49,9 @@ export default {
     total: {
       type: Number,
       default: 0
+    },
+    _id: {
+      type: Number
     }
   },
   data() {
@@ -61,12 +66,27 @@ export default {
     updateInvoiceList() {
       const { bindedQuantity: quantity, bindedDescription: description, bindedPrice: price } = this;
       this.bindedTotal = quantity * price;
-      this.$emit("updateInvoiceList", {
+      this.$emit("updateInvoiceList", [...this.invoiceList, {
         quantity,
         description,
         price,
-        total: this.bindedTotal
+        total: this.bindedTotal,
+        _id: this.invoiceList.length
+      }]);
+    },
+    editInvoice() {
+      const { bindedQuantity: quantity, bindedDescription: description, bindedPrice: price } = this;
+      this.bindedTotal = quantity * price;
+      this.$emit("editInvoice", {
+        quantity,
+        description,
+        price,
+        total: this.bindedTotal,
+        _id: this._id
       });
+    },
+    deleteInvoice() {
+      this.$emit("deleteInvoice")
     }
   }
 }
