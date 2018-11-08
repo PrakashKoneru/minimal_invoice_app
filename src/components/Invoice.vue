@@ -88,6 +88,7 @@ export default {
     padding: 10px;
     width: 25%;
     overflow: scroll;
+    cursor: pointer;
   }
   .invoiceModal {
     max-width: 100%;
