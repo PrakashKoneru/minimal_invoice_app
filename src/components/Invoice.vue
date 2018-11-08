@@ -7,7 +7,7 @@
         <th>Price</th>
         <th>Total</th>
       </tr>
-      <tr v-for="(invoice, index) in invoiceList" v-on:click="editInvoice(invoice)" :key="index">
+      <tr v-for="(invoice, index) in invoiceList" v-on:click="editInvoice(index)" :key="index">
         <td>{{ invoice.quantity }}</td>
         <td>{{ invoice.description }}</td>
         <td>{{ invoice.price }}</td>
@@ -16,7 +16,12 @@
     </table>
     <InvoiceInputs :invoiceList="invoiceList" @updateInvoiceList="updateInvoiceList"/>
     <InvoiceModal name="InvoiceModal">
-      <InvoiceInputs :editMode="true" :invoiceList="invoiceList" v:bind="selectedInvoice" @updateInvoiceList="updateInvoiceList"/>
+      <InvoiceInputs
+        :editMode="true"
+        :invoiceList="invoiceList"
+        v-bind="selectedInvoice"
+        @updateInvoiceList="updateInvoiceList"
+      />
     </InvoiceModal>
   </div>
 </template>
@@ -42,9 +47,8 @@ export default {
     deleteInvoice(index) {
       this.invoiceList = this.invoiceList.filter((invoice, i) => i !== index);
     },
-    editInvoice(invoice) {
-      this.selectedInvoice = {...this.selectedInvoice, ...invoice};
-      console.log({...this.selectedInvoice});
+    editInvoice(index) {
+      this.selectedInvoice = this.invoiceList[index];
       this.$modal.show('InvoiceModal');
     }
   }

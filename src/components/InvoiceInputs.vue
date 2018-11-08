@@ -2,7 +2,7 @@
   <div>
     <div>
       Quantity:
-      <input v-model="bindedQuantity" type="number" />
+      <input v-model.number="bindedQuantity" type="number" />
     </div>
     <div>
       Description:
@@ -10,7 +10,7 @@
     </div>
     <div>
       Price:
-      <input v-model="bindedPrice" type="number" />
+      <input v-model.number="bindedPrice" type="number" />
     </div>
     <div>
       Total: {{ bindedTotal }}
@@ -61,12 +61,13 @@ export default {
     updateInvoiceList() {
       const { bindedQuantity: quantity, bindedDescription: description, bindedPrice: price } = this;
       this.bindedTotal = quantity * price;
-      this.$emit("updateInvoiceList", { quantity, description, price, total: this.bindedTotal })
+      this.$emit("updateInvoiceList", {
+        quantity,
+        description,
+        price,
+        total: this.bindedTotal
+      });
     }
-  },
-  mounted() {
-    const { quantity, description, price } = this;
-    console.log(quantity, description, price)
   }
 }
 </script>
