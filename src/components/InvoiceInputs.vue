@@ -123,4 +123,15 @@ export default {
     margin-top: 20px;
     text-align: center;
   }
+  
+  button {
+    border: 1px solid initial;
+    border-radius: 3px;
+    padding: 4px 10px;
+    cursor: pointer;
+    min-width: 80px;
+    min-height: 25px;
+    outline: none;
+    margin: 0 10px;
+  }
 </style>
