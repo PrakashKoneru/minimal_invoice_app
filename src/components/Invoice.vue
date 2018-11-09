@@ -66,6 +66,9 @@ export default {
         return invoice
       });
       this.$modal.hide('InvoiceModal');
+    },
+    deleteInvoice(index) {
+      this.invoiceList = this.invoiceList.filter((invoice, i) => i !== index);
     }
   }
 }
@@ -86,11 +89,6 @@ export default {
   td, th {
     border: 1px solid black;
     padding: 10px;
-    width: 25%;
-    overflow: scroll;
     cursor: pointer;
-  }
-  .invoiceModal {
-    max-width: 100%;
   }
 </style>
