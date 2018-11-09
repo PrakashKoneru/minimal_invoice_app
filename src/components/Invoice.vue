@@ -1,7 +1,8 @@
 <template>
   <div>
+    <div class="title offSet">Invoice Table</div>
     <div class="invoiceTable">
-      <table>
+      <table class="offSet">
         <tr>
           <th>Quantity</th>
           <th>Description</th>
@@ -15,9 +16,9 @@
           <td>{{ invoice.total }}</td>
         </tr>
       </table>
-      <div v-if="invoiceList.length !== 0" class="total">Total: {{ computedTotal }}</div>
+      <div v-if="invoiceList.length !== 0" class="total offSet">Total: {{ computedTotal }}</div>
     </div>
-    <div class="invoiceModal">
+    <div class="invoiceModal offSet">
       <InvoiceInputs :invoiceList="invoiceList" @updateInvoiceList="updateInvoiceList"/>
       <InvoiceModal name="InvoiceModal">
         <InvoiceInputs
@@ -82,29 +83,42 @@ export default {
 </script>
 
 <style scoped>
+  .offSet {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+  }
+  .title {
+    font-size: 22px;
+    font-weight: bold;
+    margin: auto;
+  }
   .invoiceTable {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0 20px;
   }
   .total {
-    width: 100%;
-    max-width: 600px;
     margin-top: 15px;
     font-weight: bold;
     font-size: 18px;
     text-align: right;
   }
   table {
-    width: 100%;
-    max-width: 600px;
     border-collapse: collapse;
+    font-size: 4vw;
   }
   td, th {
     border: 1px solid black;
     padding: 10px;
+  }
+  td {
     cursor: pointer;
+  }
+  @media (min-width: 600px) {
+    table {
+      font-size: 18px;
+    }
   }
 </style>

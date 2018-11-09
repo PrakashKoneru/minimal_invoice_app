@@ -1,15 +1,15 @@
 <template>
   <div>
     <div class="invoiceInputs">
-      <div class="invoiceField">
+      <div>
         <div>Quantity:</div>
         <input v-model.number="bindedQuantity" type="number" />
       </div>
-      <div class="invoiceField">
+      <div>
         <div>Description:</div>
         <input v-model="bindedDescription" type="description" />
       </div>
-      <div class="invoiceField">
+      <div>
         <div>Price:</div>
         <input v-model.number="bindedPrice" type="number" />
       </div>
@@ -133,5 +133,9 @@ export default {
     min-height: 25px;
     outline: none;
     margin: 0 10px;
+  }
+
+  @media (max-width: 600px) {
+
   }
 </style>
