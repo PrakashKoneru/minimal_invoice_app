@@ -7,7 +7,7 @@
       </div>
       <div>
         <div>Description:</div>
-        <input v-model="bindedDescription" type="description" />
+        <div><input v-model="bindedDescription" type="description" /></div>
       </div>
       <div>
         <div>Price:</div>
@@ -99,19 +99,20 @@ export default {
 
 <style scoped>
   .invoiceInputs {
-    display: flex;
-    justify-content: space-around;
     margin: auto;
-    margin-top: 40px;
-    flex-wrap: wrap;
-    max-width: 80%;
-    text-align: left;
+    margin-top: 20px;
+    max-width: 85%;
+  }
+
+  .invoiceInputs > div {
+    margin-top: 20px;
   }
 
   input {
     height: 25px;
     padding: 2px 5px;
     outline: none;
+    width: 100%;
   }
 
   input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
@@ -135,7 +136,10 @@ export default {
     margin: 0 10px;
   }
 
-  @media (max-width: 600px) {
-
+  @media (min-width: 600px) {
+    .invoiceInputs {
+      display: flex;
+      justify-content: space-around;
+    }
   }
 </style>
