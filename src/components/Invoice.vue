@@ -20,7 +20,7 @@
     </div>
     <div class="invoiceModal offSet">
       <InvoiceInputs :invoiceList="invoiceList" @updateInvoiceList="updateInvoiceList"/>
-      <InvoiceModal name="InvoiceModal">
+      <InvoiceModal name="InvoiceModal" :adaptive="true">
         <InvoiceInputs
           :editMode="true"
           :invoiceList="invoiceList"
