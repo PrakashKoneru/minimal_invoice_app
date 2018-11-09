@@ -13,14 +13,10 @@
         <div>Price:</div>
         <input v-model.number="bindedPrice" type="number" />
       </div>
-      <div class="invoiceField">
-        <div>Total:</div>
-        <div>{{ bindedTotal }}</div>
-      </div>
     </div>
     <div class="invoiceButtons">
       <button v-if="!editMode" v-on:click="updateInvoiceList"> +ADD </button>
-      <button v-if="editMode" v-on:click="editInvoice"> Edit </button>
+      <button v-if="editMode" v-on:click="updateInvoice"> Update </button>
       <button v-if="editMode" v-on:click="deleteInvoice"> Delete </button>
       <button v-if="editMode" v-on:click="cancelModal"> Cancel </button>
     </div>
@@ -80,10 +76,10 @@ export default {
         _id: this.invoiceList.length
       }]);
     },
-    editInvoice() {
+    updateInvoice() {
       const { bindedQuantity: quantity, bindedDescription: description, bindedPrice: price } = this;
       this.bindedTotal = quantity * price;
-      this.$emit("editInvoice", {
+      this.$emit("updateInvoice", {
         quantity,
         description,
         price,

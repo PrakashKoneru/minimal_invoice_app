@@ -15,6 +15,7 @@
           <td>{{ invoice.total }}</td>
         </tr>
       </table>
+      <div v-if="invoiceList.length !== 0" class="total">Total: {{ computedTotal }}</div>
     </div>
     <div class="invoiceModal">
       <InvoiceInputs :invoiceList="invoiceList" @updateInvoiceList="updateInvoiceList"/>
@@ -24,7 +25,7 @@
           :invoiceList="invoiceList"
           v-bind="selectedInvoice"
           @deleteInvoice="deleteInvoice"
-          @editInvoice="editInvoice"
+          @updateInvoice="updateInvoice"
           @updateInvoiceList="updateInvoiceList"
         />
       </InvoiceModal>
@@ -46,6 +47,15 @@ export default {
       selectedInvoice: {}
     }
   },
+  computed: {
+    computedTotal: function () {
+      let count = 0;
+      for(let i=0; i<this.invoiceList.length; i++) {
+        count += this.invoiceList[i].total;
+      }
+      return count;
+    }
+  },
   methods: {
     updateInvoiceList(value) {
       this.invoiceList = value
@@ -58,7 +68,7 @@ export default {
       this.selectedInvoice = this.invoiceList[index];
       this.$modal.show('InvoiceModal');
     },
-    editInvoice(value) {
+    updateInvoice(value) {
       this.invoiceList = this.invoiceList.map((invoice) => {
         if (invoice._id === this.selectedInvoice._id) {
           return value
@@ -66,9 +76,6 @@ export default {
         return invoice
       });
       this.$modal.hide('InvoiceModal');
-    },
-    deleteInvoice(index) {
-      this.invoiceList = this.invoiceList.filter((invoice, i) => i !== index);
     }
   }
 }
@@ -77,9 +84,18 @@ export default {
 <style scoped>
   .invoiceTable {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 0 20px;
+  }
+  .total {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: right;
   }
   table {
     width: 100%;
